@@ -1,0 +1,18 @@
+# Build artefacts
+build/
+*.app/
+*.dmg
+*.zip
+
+# macOS
+.DS_Store
+
+# Generated slideshow images — regenerate with:
+#   python3 tools/build-slideshow.py --source <素材目录>
+Wallpapers/凡人女修/images/
+
+# IDE / editor
+.idea/
+.vscode/
+*.xcuserdata/
+*.xcworkspace/

@@ -1,0 +1,54 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "Lightweight Canvas 2D aurora. Demonstrates Wallpaper Engine user properties, pause handling and the audio listener contract.",
+	"file" : "index.html",
+	"general" : {
+		"properties" : {
+			"schemecolor" : {
+				"order" : 0,
+				"text" : "Aurora colour",
+				"type" : "color",
+				"value" : "0.27 0.78 0.83"
+			},
+			"speed" : {
+				"fraction" : true,
+				"max" : 2,
+				"min" : 0.1,
+				"order" : 1,
+				"precision" : 2,
+				"text" : "Flow speed",
+				"type" : "slider",
+				"value" : 0.6
+			},
+			"density" : {
+				"max" : 400,
+				"min" : 0,
+				"order" : 2,
+				"text" : "Star density",
+				"type" : "slider",
+				"value" : 170
+			},
+			"showclock" : {
+				"order" : 3,
+				"text" : "Show clock",
+				"type" : "bool",
+				"value" : true
+			},
+			"style" : {
+				"options" : [
+					{ "label" : "Ribbon", "value" : "ribbon" },
+					{ "label" : "Wave", "value" : "wave" }
+				],
+				"order" : 4,
+				"text" : "Style",
+				"type" : "combo",
+				"value" : "ribbon"
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Abstract", "Nature" ],
+	"title" : "Aurora Flow",
+	"type" : "web",
+	"version" : 1
+}

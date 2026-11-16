@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Particle Clock</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0a0b10; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+  #hud {
+    position: fixed; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; pointer-events: none;
+    font-family: -apple-system, "Helvetica Neue", sans-serif; color: #fff;
+  }
+  #time { font-size: clamp(60px, 11vw, 180px); font-weight: 200; letter-spacing: .06em; }
+  #caption { margin-top: 18px; font-size: 13px; letter-spacing: .55em; opacity: .55; }
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div id="hud"><div id="time">--:--</div><div id="caption"></div></div>
+<script src="app.js"></script>
+</body>
+</html>

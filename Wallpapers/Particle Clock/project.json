@@ -1,0 +1,40 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "Minimal particle clock exercising the full Wallpaper Engine web host API surface, including media, directory and plugin listeners.",
+	"file" : "index.html",
+	"general" : {
+		"properties" : {
+			"accent" : {
+				"order" : 0,
+				"text" : "Accent colour",
+				"type" : "color",
+				"value" : "0.95 0.55 0.35"
+			},
+			"caption" : {
+				"order" : 1,
+				"text" : "Caption",
+				"type" : "textinput",
+				"value" : "STAY FOCUSED"
+			},
+			"count" : {
+				"max" : 600,
+				"min" : 40,
+				"order" : 2,
+				"text" : "Particles",
+				"type" : "slider",
+				"value" : 220
+			},
+			"slideshow" : {
+				"mode" : "ondemand",
+				"order" : 3,
+				"text" : "Background images",
+				"type" : "directory",
+				"value" : ""
+			}
+		}
+	},
+	"tags" : [ "Minimal", "Clock" ],
+	"title" : "Particle Clock",
+	"type" : "web",
+	"version" : 1
+}

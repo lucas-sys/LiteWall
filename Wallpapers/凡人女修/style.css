@@ -1,0 +1,180 @@
+:root {
+  --accent: rgb(199, 66, 56);
+  --fade: 1.6s;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #08080b;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+/* --- blurred underlay: fills the letterbox around a contain-fitted image --- */
+.backdrop {
+  position: fixed;
+  inset: -8%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.16);
+  filter: blur(38px) brightness(0.36) saturate(0.7);
+  transition: opacity var(--fade) ease-in-out;
+  will-change: opacity;
+}
+.backdrop.on { opacity: 1; }
+body.no-blur .backdrop { filter: brightness(0.22) saturate(0.5); }
+
+/* --- two cross-fading slides --- */
+#stage { position: fixed; inset: 0; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--fade) ease-in-out;
+  will-change: opacity;
+}
+.slide.on { opacity: 1; }
+
+.slide img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.45);
+}
+
+.slide.kb img { animation: kenburns 22s ease-out both; }
+@keyframes kenburns {
+  from { transform: scale(1.005) translate3d(0, 0, 0); }
+  to   { transform: scale(1.095) translate3d(-1.1%, -0.7%, 0); }
+}
+
+/* --- atmospheric gradient + vignette --- */
+#vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 34%, rgba(0,0,0,0.52) 100%),
+    linear-gradient(to top, rgba(0,0,0,0.74) 0%, rgba(0,0,0,0) 30%,
+                    rgba(0,0,0,0) 74%, rgba(0,0,0,0.48) 100%);
+}
+
+/* --- title block --- */
+#brand {
+  position: fixed;
+  top: 5.2vh;
+  left: 4.6vw;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+}
+.seal {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--accent);
+  border-radius: 3px;
+  color: var(--accent);
+  background: rgba(0, 0, 0, 0.28);
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 27px;
+  line-height: 1;
+}
+.brand-title {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  font-size: 25px;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.7);
+}
+.brand-sub {
+  margin-top: 7px;
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* --- caption --- */
+#caption {
+  position: fixed;
+  bottom: 6.6vh;
+  left: 4.6vw;
+  right: 4.6vw;
+  user-select: none;
+}
+.hairline {
+  width: 62px;
+  height: 1px;
+  margin-bottom: 17px;
+  background: var(--accent);
+  box-shadow: 0 0 18px var(--accent);
+}
+.caption-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+.name {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  font-size: clamp(34px, 4.4vw, 70px);
+  font-weight: 400;
+  letter-spacing: 0.17em;
+  color: #fff;
+  text-shadow: 0 3px 34px rgba(0, 0, 0, 0.85);
+  animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(13px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.counter {
+  flex: none;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* --- progress hairline --- */
+#progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.07);
+}
+#progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  opacity: 0.85;
+}
+@keyframes progress { from { width: 0; } to { width: 100%; } }
+
+/* --- host-controlled states --- */
+body.paused * { animation-play-state: paused !important; }
+
+/* Pure-image mode (default): hide every piece of on-screen typography —
+   title block, seal, character name, counter and progress hairline. */
+body.no-text #brand,
+body.no-text #caption,
+body.no-text #progress { display: none; }
