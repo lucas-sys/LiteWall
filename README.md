@@ -175,11 +175,14 @@ LiteWall/
 ├── docs/
 │   ├── REA-FINDINGS.md            REA 证据链与能力边界
 │   ├── rea-aurora.evidence.json   REA Evidence bundle
-│   └── rea-particle-clock.evidence.json
+│   ├── rea-particle-clock.evidence.json
+│   └── preview-fanren.png         《凡人女修》纯净模式预览
 ├── tools/                         安装脚本、DMG 构建、验证探针、轮播素材构建脚本
-├── Info.plist / build.sh / verify.sh
+├── Info.plist / build.sh / verify.sh / LICENSE
 └── README.md
 ```
+
+> 仓库内不含 `Wallpapers/凡人女修/images/`（34 MB 生成物）；帧清单 `manifest.js` 已随仓库提供。clone 后运行 `python3 tools/build-slideshow.py --source <素材目录>` 生成图片即可。
 
 ---
 
@@ -217,4 +220,12 @@ PATH=/opt/homebrew/bin:/usr/bin:/bin rea open_binary "/absolute/path/to/setup.ex
 
 ## 6. 合规说明
 
-本项目**不包含 Wallpaper Engine 的任何二进制、代码或素材**。`project.json` 字段与 `window.wallpaper*` API 名称属于公开的创作者文档约定；两张示例壁纸、shim 与全部宿主代码均为本项目原创。用途限定为本地格式兼容，不绕过任何软件的授权机制。
+本项目**不包含 Wallpaper Engine 的任何二进制、代码或素材**。`project.json` 字段与 `window.wallpaper*` API 名称属于公开的创作者文档约定；三张内置壁纸的宿主代码、shim 与《凡人女修》轮播实现均为本项目原创（其立绘素材由使用者自行提供，不随仓库分发）。用途限定为本地格式兼容，不绕过任何软件的授权机制。
+
+---
+
+## 7. License
+
+MIT，见 [LICENSE](LICENSE)。
+
+仓库地址：<https://github.com/lucas-sys/LiteWall>
