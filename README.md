@@ -1,5 +1,8 @@
 # LiteWall · 轻壁纸
 
+[![build](https://github.com/lucas-sys/LiteWall/actions/workflows/build.yml/badge.svg)](https://github.com/lucas-sys/LiteWall/actions/workflows/build.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 面向 macOS 的轻量化动态壁纸宿主，用 Swift / AppKit 实现，兼容 Wallpaper Engine 的 **web 类壁纸格式**（`project.json` + HTML/Canvas）与其 10 项 `window.wallpaper*` 作者 API，同时支持视频与静态图壁纸。无 Dock 图标、无 Electron、无后台常驻服务，仅一个菜单栏图标。
 
 > **关于 REA 的定位**：REA 是逆向分析工具，不是应用框架。本项目用 REA 做的事是**验证壁纸格式与运行时契约**（静态分析壁纸包、提取作者脚本依赖的宿主 API），产品本体用原生 Swift 编写。本机没有 Wallpaper Engine 的 Windows 二进制或 workshop 壁纸包，因此**没有对 WE 程序本体做逆向**；完整的证据边界见 [`docs/REA-FINDINGS.md`](docs/REA-FINDINGS.md)。
