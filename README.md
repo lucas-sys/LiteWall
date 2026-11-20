@@ -177,7 +177,8 @@ LiteWall/
 │   ├── rea-aurora.evidence.json   REA Evidence bundle
 │   ├── rea-particle-clock.evidence.json
 │   └── preview-fanren.png         《凡人女修》纯净模式预览
-├── tools/                         安装脚本、DMG 构建、验证探针、轮播素材构建脚本
+├── Assets/                        应用图标（icns 主图、1024 母版、小尺寸验证图）
+├── tools/                         安装脚本、DMG 构建、验证探针、壁纸素材与图标生成脚本
 ├── Info.plist / build.sh / verify.sh / LICENSE
 └── README.md
 ```
@@ -186,7 +187,76 @@ LiteWall/
 
 ---
 
-## 4. 已知限制
+## 4. 应用图标
+
+![LiteWall 应用图标](Assets/icon-master-1024.png)
+
+图标为**原创设计**，取仙侠修仙的四个可辨识元素：**飞剑**（主体）、**灵气**（环绕缎带）、**法阵**（底部透视圆环）、**丹药**（朱红丹点）。全部由 `tools/make-icon.py` 程序化绘制，**不含任何官方 Logo、角色形象或受版权保护素材**。
+
+### 资源清单
+
+| 文件 | 用途 |
+|---|---|
+| `Assets/AppIcon.icns` | **主图标**（深色底 · 铺满版），构建时复制到 `Contents/Resources/`，由 `Info.plist` 的 `CFBundleIconFile` 引用 |
+| `Assets/AppIcon-legacy.icns` | 自带圆角遮罩的版本，供 macOS 13–15 使用（见下） |
+| `Assets/AppIcon-light.icns` | 浅色底变体，适合浅色 Dock / 浅色桌面 |
+| `Assets/AppIcon-light-legacy.icns` | 浅色底 + 自带圆角 |
+| `Assets/icon-master-1024.png` | 1024 主图（设计母版） |
+| `Assets/icon-proof.png` / `icon-proof-light.png` | 小尺寸验证图（16 / 32 / 64 / 128 / 256） |
+| `tools/make-icon.py` | 生成脚本，造型与配色参数集中在文件顶部常量 |
+
+### 两种形态的差别（重要）
+
+macOS 26 起，系统会为应用图标自行绘制**玻璃圆角容器**并裁切画面内容。因此主图标采用「**内容铺满画布**」的画法；如果图标自带圆角遮罩，会被系统再套一层容器，形成双层嵌套（实测确认）。
+
+- macOS 26 / 27（默认）：`AppIcon.icns`（铺满版）
+- macOS 13–15：需要图标自带圆角，改用 legacy 版：
+
+  ```bash
+  cp Assets/AppIcon-legacy.icns build/LiteWall.app/Contents/Resources/AppIcon.icns
+  ```
+
+### 尺寸规格
+
+`.icns` 内含 10 个位图，覆盖 macOS 全部标准槽位：
+
+| 槽位 | 像素 | 用途 |
+|---|---|---|
+| `icon_16x16.png` / `@2x` | 16 / 32 | Finder 列表、菜单栏 |
+| `icon_32x32.png` / `@2x` | 32 / 64 | Finder 列表（Retina） |
+| `icon_128x128.png` / `@2x` | 128 / 256 | Finder 预览、Dock |
+| `icon_256x256.png` / `@2x` | 256 / 512 | 快速查看 |
+| `icon_512x512.png` / `@2x` | 512 / 1024 | 预览、图标源 |
+
+**小尺寸专项设计**：16 / 32 px 版本改用「更短更粗的剑身 + 加宽剑格 + 去掉剑柄 + 提亮剑刃」，并移除缎带与法阵——细长的剑身在 16 px 下会溶解成噪点，只有实心剪影能存活。
+
+### 配色
+
+| 用途 | 深色主题（默认） | 浅色主题 |
+|---|---|---|
+| 底色（上→下） | `#050910` → `#101E2F` | `#F3F7FA` → `#CEE0E8` |
+| 中心辉光 | `#1A5C60` | `#A8D6D6` |
+| 灵气缎带 | `#4FD6C9` | `#127A76` |
+| 法阵 | `#2FA9A0` | `#1A8A84` |
+| 剑身（上→下） | `#F7FBFD` → `#ACC2CF` | `#203446` → `#607A8A` |
+| 剑格 | `#ECC484`，暗部 `#C29458` | `#B07E2C`，暗部 `#8C601E` |
+| 剑柄 | `#3A9692`，暗部 `#1C585A` | `#14605E`，暗部 `#0A3C3E` |
+| 丹药 | `#E2503C`，高光 `#FF987E` | `#C63A28`，高光 `#E87058` |
+
+### 重新生成
+
+```bash
+python3 tools/make-icon.py                 # 主图标（深色 · 铺满）
+python3 tools/make-icon.py --style legacy  # 旧系统版（自带圆角）
+python3 tools/make-icon.py --variant light # 浅色底
+python3 tools/make-icon.py --preview       # 附带小尺寸验证图
+```
+
+依赖：Python 3 + Pillow（`pip3 install pillow`）与系统自带的 `iconutil`。
+
+---
+
+## 5. 已知限制
 
 1. **Scene 壁纸不支持**：`scene.pkg` 是 WE 专有的二进制场景容器，需要逆向其格式与 Windows 渲染器，超出轻量化范围。
 2. **无音频频谱数据源**：macOS 上获取系统音频需 ScreenCaptureKit / CoreAudio tap，会带来权限与显著开销；当前注册 listener 但不推送数据。依赖频谱的壁纸会退化为静态表现。
@@ -199,7 +269,7 @@ LiteWall/
 
 ---
 
-## 5. 用 REA 继续深入
+## 6. 用 REA 继续深入
 
 如果你手上有真实的 WE workshop 壁纸包或 Windows 安装包，可以直接复用本项目的证据链方法：
 
@@ -218,13 +288,13 @@ PATH=/opt/homebrew/bin:/usr/bin:/bin rea open_binary "/absolute/path/to/setup.ex
 
 ---
 
-## 6. 合规说明
+## 7. 合规说明
 
 本项目**不包含 Wallpaper Engine 的任何二进制、代码或素材**。`project.json` 字段与 `window.wallpaper*` API 名称属于公开的创作者文档约定；三张内置壁纸的宿主代码、shim 与《凡人女修》轮播实现均为本项目原创（其立绘素材由使用者自行提供，不随仓库分发）。用途限定为本地格式兼容，不绕过任何软件的授权机制。
 
 ---
 
-## 7. License
+## 8. License
 
 MIT，见 [LICENSE](LICENSE)。
 

@@ -22,6 +22,7 @@ xcrun swiftc -O \
 echo "[2/4] Copying resources..."
 cp "$ROOT/Sources/WEShim.js" "$RES/WEShim.js"
 cp -R "$ROOT/Wallpapers" "$RES/Wallpapers"
+cp "$ROOT/Assets/AppIcon.icns" "$RES/AppIcon.icns"
 
 echo "[3/4] Ad-hoc signing (required by WebKit JIT)..."
 codesign --force --sign - --identifier "dev.litewall.LiteWall" "$APP"

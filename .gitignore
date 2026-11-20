@@ -11,6 +11,10 @@ build/
 #   python3 tools/build-slideshow.py --source <素材目录>
 Wallpapers/凡人女修/images/
 
+# Icon intermediate products — regenerate with:
+#   python3 tools/make-icon.py
+Assets/*.iconset/
+
 # IDE / editor
 .idea/
 .vscode/
